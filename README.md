@@ -17,7 +17,7 @@ Preconfigured services can be selected.
 ### 👉 Traefik (HTTP-Reverse Proxy and LoadBalancer) 
 
 ### System requirements  
-Requires Docker compose > 2.27 (check in terminal: docker compose --version)
+Requires Docker compose > 2.27 (check in terminal: docker compose version)
 
 # /mariadb/certs/./generate_certificates.sh
 
