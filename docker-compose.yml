@@ -1,0 +1,84 @@
+include:
+  # uncomment needed services
+  - docker-compose-mariadb.yml  # with service db declared !! select only  one database - both are not allowed
+  # - docker-compose-postgres.yml # with service db declared !! select only  one database - both are not allowed
+  # - docker-compose-php-nginx.yml  # with service php-nginx declared
+  # - docker-compose-phpmyadmin.yml  # with service phpmyadmin declared
+  # - docker-compose-portainer.yml  # with service portainer declared
+  - docker-compose-traefik.yml  # with service traefik declared
+  - docker-compose-mosquitto.yml # with service mosquitto declared
+
+
+services:
+  app:
+    extends:
+      file: docker-compose-python.yml
+      service: python
+    build:
+      context: ./backend/app
+    container_name: app
+    volumes:
+      - ./backend/app/log:/usr/src/app/log
+      - ./backend/app/src:/usr/src/app/src:ro
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    extends:
+      file: docker-compose-python.yml
+      service: python
+    build:
+      context: ./backend/api
+    container_name: api
+    volumes:
+      - ./backend/api/log:/usr/src/app/log
+      - ./backend/api/src:/usr/src/app/src:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-secure.rule=Host(`${SUBDOMAIN_API}${DOMAIN}`)"
+      - "traefik.http.routers.api-secure.entrypoints=websecure"
+      - "traefik.http.services.api-secure.loadbalancer.server.port=${PORT_API}"
+      - "traefik.http.routers.api-secure.tls.certresolver=letsencrypt"
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cd /usr/src/app/src
+        uvicorn main:api --reload --workers 1 --host "0.0.0.0" --port ${PORT_API} --proxy-headers
+    depends_on:
+      - db
+
+  flet:
+    extends:
+      file: docker-compose-python.yml
+      service: python
+    build:
+      context: ./frontend/flet
+    container_name: flet
+    environment:
+      - FLET_FORCE_WEB_SERVER=true
+      - FLET_SERVER_PORT=${PORT_FLET}
+      - FLET_APP_LIFETIME_MINUTES=10
+    ports:
+      - "${PORT_FLET}:${PORT_FLET}"
+    volumes:
+      - ./frontend/flet/log:/usr/src/app/log
+      - ./frontend/flet/src:/usr/src/app/src:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web-app.rule=Host(`${SUBDOMAIN_FLET}${DOMAIN}`)"
+      - "traefik.http.routers.web-app.entrypoints=websecure"
+      - "traefik.http.services.web-app.loadbalancer.server.port=${PORT_FLET}"
+      - "traefik.http.routers.web-app.service=web-app"
+      - "traefik.http.routers.web-app.tls.certresolver=letsencrypt"
+
+networks:
+  backnet:
+
+# volumes:
+#  db_data:
+#      name: ${DB_VOLUME_NAME}
+
+
+

@@ -1,0 +1,7 @@
+/backend/api/log/
+/backend/app/log/
+/frontend/flet/log/
+/.idea/
+/.venv/
+/.traefik/public-certificates/
+/.portainer_data/

@@ -1,0 +1,9 @@
+*.log
+aria_log.*
+ib_logfile0
+ibtmp1
+undo001
+undo002
+undo003
+
+

@@ -1,0 +1,55 @@
+  services:
+    db:
+      image: mariadb:latest
+      container_name: mariadb
+      restart: always
+
+      stdin_open: true # docker run -i
+      tty: true        # docker run -t
+      volumes:
+        - ./.mariadb/certs:/etc/mysql/certs
+        - ./.mariadb/conf.d/secure.cnf:/etc/mysql/conf.d/secure.cnf
+        # - ${DB_VOLUME_NAME}:/var/lib/mysql
+        - ./.mariadb/${DB_VOLUME_NAME}:/var/lib/mysql
+        - /etc/localtime:/etc/localtime
+      environment:
+        MARIADB_ROOT_PASSWORD: example
+      # ports -> visible on the host to get ssh access
+      ports:
+        - "${PORT_DB}:3306"
+      healthcheck:
+        test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+        interval: 10s
+        timeout: 5s
+        retries: 3
+
+      # expose -> visible on the backnet but not on the host
+      expose:
+        - "${PORT_DB}"
+      networks:
+        - backnet
+
+    adminer:
+      image: adminer
+      restart: always
+      ports:
+        - "8080:8080"
+      networks:
+        - backnet
+
+    #Max Scale - läuft aber geht noch nicht ganz
+    # username is admin and the password is mariadb
+    maxscale:
+      image: mariadb/maxscale:latest
+      # volumes:
+      #  - ./.mariadb/maxscale/maxscale.cnf:/etc/maxscale.cnf.d/maxscale.cnf
+      ports:
+        - 0.0.0.0:4006:4006 # readwrite port
+        - 0.0.0.0:4008:4008 # readonly port
+        - 0.0.0.0:8989:8989 # REST API port
+      links:
+        - db:database
+      depends_on:
+        - db
+      networks:
+        - backnet
