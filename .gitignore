@@ -5,3 +5,4 @@
 /.venv/
 /.traefik/public-certificates/
 /.portainer_data/
+readme_symbols.md
