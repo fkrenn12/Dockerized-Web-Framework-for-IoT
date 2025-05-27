@@ -1,12 +1,23 @@
-# 🚀Docker Framework for Web Development 🚀
-## 👉 MariaDB
-## 👉 PhpMyAdmin(Administration for MariaDB)
-## 👉 API (FastAPI)
-## 👉 APP (Running python scripts in container)
-## 👉 Flet (Framework for web application in Python)
-## 👉 NGINX-PHP (Serving HTML and PHP scripts) 
-## 👉 Portainer (Administration Docker)
-## 👉 Traefik (HTTP-Reverse Proxy and LoadBalancer) 
+# 🐳 Dockerized Web-Framework for IoT 🐳
+Preconfigured services can be selected.
+## *Applications and Web*
+### 👉 APP (Running python scripts in container)
+### 👉 Flet (Framework for web application in pure Python)
+### 👉 API (FastAPI)
+### 👉 postgREST (REST API for postgres database)
+### 👉 NGINX-PHP (HTML and PHP Webserver) 
 
-###Docker compose > 2.27
+## *Databases*
+### 👉 MariaDB + adminer + phpmyadmin + maxscale
+### 👉 postgres + adminer
+
+## *Manage Docker*
+### 👉 Portainer (Manage and administrate Docker)
+## *Reverse Proxy*
+### 👉 Traefik (HTTP-Reverse Proxy and LoadBalancer) 
+
+### System requirements  
+Requires Docker compose > 2.27 (check in terminal: docker compose --version)
+
 # /mariadb/certs/./generate_certificates.sh
+
