@@ -1,7 +1,8 @@
 include:
   # uncomment needed services
-  - docker-compose-influxdb-telegraf-grafana.yml # services influxdb, telegraf, grafana are declared
+  # - docker-compose-influxdb-telegraf-grafana.yml # services influxdb, telegraf, grafana are declared
   - docker-compose-mariadb.yml  # services db, phpmyadmin, adminer, maxscale declared !! select only single database - both are not allowed
+  - docker-compose-node-red.yml
   # - docker-compose-postgres.yml # service db declared !! select only single database - both are not allowed
   # - docker-compose-php-nginx.yml  # service php-nginx declared
   # - docker-compose-phpmyadmin.yml  # service phpmyadmin declared

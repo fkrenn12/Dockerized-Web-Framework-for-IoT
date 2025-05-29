@@ -5,8 +5,14 @@ services:
       - TZ=${TZ}
     ports:
       - "1880:1880"
+    labels:
+      - "traefik.enable=false"
+      - "traefik.http.routers.api-secure.rule=Host(`${SUBDOMAIN_NODE_RED}${DOMAIN}`)"
+      - "traefik.http.routers.api-secure.entrypoints=websecure"
+      - "traefik.http.services.api-secure.loadbalancer.server.port=1880"
+      - "traefik.http.routers.api-secure.tls.certresolver=letsencrypt"
     volumes:
-      - ./node-red/data:/data
+      - ./.node-red/data:/data
     networks:
       - backnet
 
