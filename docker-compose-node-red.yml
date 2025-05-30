@@ -7,10 +7,10 @@ services:
       - "${PORT_NODERED}:${PORT_NODERED}"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api-secure.rule=Host(`${SUBDOMAIN_NODERED}${DOMAIN}`)"
-      - "traefik.http.routers.api-secure.entrypoints=websecure"
-      - "traefik.http.services.api-secure.loadbalancer.server.port=${PORT_NODERED}"
-      - "traefik.http.routers.api-secure.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.nodered.rule=Host(`${SUBDOMAIN_NODERED}${DOMAIN}`)"
+      - "traefik.http.routers.nodered.entrypoints=websecure"
+      - "traefik.http.services.nodered.loadbalancer.server.port=${PORT_NODERED}"
+      - "traefik.http.routers.nodered.tls.certresolver=letsencrypt"
     volumes:
       - ./.node-red/data:/data
     networks:
