@@ -10,7 +10,6 @@ include:
   - docker-compose-traefik.yml  # service traefik declared
   # - docker-compose-mosquitto.yml # service mosquitto declared
 
-
 services:
   app:
     extends:
