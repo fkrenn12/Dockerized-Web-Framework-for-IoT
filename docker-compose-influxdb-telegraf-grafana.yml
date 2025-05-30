@@ -4,14 +4,14 @@ services:
     container_name: influxdb
     restart: always
     # ports:
-    #  - "8086:8086"
+    #  - "${PORT_INFLUXDB}:${PORT_INFLUXDB}"
     volumes:
       - ./.influxdb/data_db:/var/lib/influxdb2
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.influxdb.rule=Host(`${SUBDOMAIN_INFLUXDB}${DOMAIN}`)"
       - "traefik.http.routers.influxdb.entrypoints=websecure"
-      - "traefik.http.services.influxdb.loadbalancer.server.port=8086"
+      - "traefik.http.services.influxdb.loadbalancer.server.port=${PORT_INFLUXDB}"
       - "traefik.http.routers.influxdb.tls.certresolver=letsencrypt"
     networks:
       - backnet
@@ -28,7 +28,7 @@ services:
       links:
         - influxdb
       ports:
-        - '8125:8125'
+        - '${PORT_TELEGRAF}:${PORT_TELEGRAF}'
       networks:
         - backnet
 
@@ -37,7 +37,7 @@ services:
     container_name: grafana
     restart: always
     # ports:
-    #  - "3000:3000"
+    #  - "${PORT_GRAFANA}:${PORT_GRAFANA}"
     depends_on:
       - influxdb
     volumes:
@@ -46,7 +46,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.grafana.entrypoints=websecure"
       - "traefik.http.routers.grafana.rule=Host(`${SUBDOMAIN_GRAFANA}${DOMAIN}`)"
-      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+      - "traefik.http.services.grafana.loadbalancer.server.port=${PORT_GRAFANA}"
       - "traefik.http.routers.grafana.tls=true"
       - "traefik.http.routers.grafana.tls.certresolver=letsencrypt"
     networks:

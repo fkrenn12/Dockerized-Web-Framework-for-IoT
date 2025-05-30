@@ -6,7 +6,7 @@ services:
     container_name: php-nginx
     restart: always
     # ports:
-    #  - 8080:8080
+    #  - ${PORT_PHP_NGINX}:${PORT_PHP_NGINX}
     volumes:
       # default site
       - ./frontend/web_php/html:/var/www/html
@@ -22,7 +22,7 @@ services:
       - "traefik.http.routers.web-php.rule=Host(`${SUBDOMAIN_PHP}${DOMAIN}`)"
       - "traefik.http.routers.web-php.entrypoints=websecure"
       - "traefik.http.routers.web-php.tls.certresolver=letsencrypt"
-      - "traefik.http.services.web-php.loadbalancer.server.port=8080"
+      - "traefik.http.services.web-php.loadbalancer.server.port=${PORT_PHP_NGINX}"
     networks:
       - backnet
     depends_on:

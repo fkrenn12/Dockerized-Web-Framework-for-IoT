@@ -32,6 +32,8 @@ services:
     build:
       context: ./backend/api
     container_name: api
+    # ports:
+    #  - "${PORT_API}:${PORT_API}"
     volumes:
       - ./backend/api/log:/usr/src/app/log
       - ./backend/api/src:/usr/src/app/src:ro
@@ -62,8 +64,8 @@ services:
       - FLET_FORCE_WEB_SERVER=true
       - FLET_SERVER_PORT=${PORT_FLET}
       - FLET_APP_LIFETIME_MINUTES=10
-    ports:
-      - "${PORT_FLET}:${PORT_FLET}"
+    # ports:
+    #  - "${PORT_FLET}:${PORT_FLET}"
     volumes:
       - ./frontend/flet/log:/usr/src/app/log
       - ./frontend/flet/src:/usr/src/app/src:ro
