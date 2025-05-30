@@ -9,11 +9,11 @@ Running on remote Linux Host run script: x-add_single_user.sh
 
 # 👉 Generate passwd file for multiple users  🧞🧞🧞🧞
 ⭐Write username:password in each line (plain text password) into passwd  
-👀 Inspect passwd_example</b> to see how it should look like  
+👀 <b>Inspect passwd_example</b> to see how it should look like  
 ⭐On localhost run script: x-generate_passwd.ps1  
 ⭐On remote Linux Host run script: x-generate_passwd.sh   
 
-https://mosquitto.org/man/mosquitto-conf-5.html
+Mosquitto configuration manual: https://mosquitto.org/man/mosquitto-conf-5.html
 
-## ✔️ Example starting a script in the container terminal ✔️
-docker exec -it mosquitto sh -c 'mosquitto_passwd -U mosquitto/config/passwd'
+## ✔️ Example executing a command in the container terminal ✔️
+docker exec -it mosquitto sh -c 'cd /mosquitto/conf'

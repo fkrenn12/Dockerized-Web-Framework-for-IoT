@@ -3,13 +3,13 @@ services:
     image: nodered/node-red:latest
     environment:
       - TZ=${TZ}
-    ports:
-      - "1880:1880"
+    # ports:
+    # - "${PORT_NODERED}:${PORT_NODERED}"
     labels:
-      - "traefik.enable=false"
-      - "traefik.http.routers.api-secure.rule=Host(`${SUBDOMAIN_NODE_RED}${DOMAIN}`)"
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-secure.rule=Host(`${SUBDOMAIN_NODERED}${DOMAIN}`)"
       - "traefik.http.routers.api-secure.entrypoints=websecure"
-      - "traefik.http.services.api-secure.loadbalancer.server.port=1880"
+      - "traefik.http.services.api-secure.loadbalancer.server.port=${PORT_NODERED}"
       - "traefik.http.routers.api-secure.tls.certresolver=letsencrypt"
     volumes:
       - ./.node-red/data:/data
