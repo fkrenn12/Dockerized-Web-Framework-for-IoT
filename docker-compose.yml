@@ -10,6 +10,12 @@ include:
   - docker-compose-traefik.yml  # service traefik declared
   # - docker-compose-mosquitto.yml # service mosquitto declared
 
+# apt update
+# apt install unzip
+# apt install wget
+# wget https://github.com/fkrenn12/API-MQTT-Gateway/archive/master.zip
+# unzip filename.zip -d /path/to/directory
+
 services:
   app:
     extends:
