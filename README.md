@@ -19,5 +19,5 @@ Preconfigured services can be selected.
 ### System requirements  
 Requires Docker compose > 2.27 (check in terminal: docker compose version)
 
-# /mariadb/certs/./generate_certificates.sh
+### /mariadb/certs/./generate_certificates.sh
 
