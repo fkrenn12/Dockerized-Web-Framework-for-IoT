@@ -25,5 +25,5 @@ services:
       - "traefik.http.services.web-php.loadbalancer.server.port=${PORT_PHP_NGINX}"
     networks:
       - backnet
-    depends_on:
-      - db
+    # depends_on:
+    #  - db

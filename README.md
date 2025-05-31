@@ -4,11 +4,13 @@ Preconfigured services can be selected.
 ### 👉 APP (Running python scripts in container)
 ### 👉 Flet (Framework for web application in pure Python)
 ### 👉 API (FastAPI)
+### 👉 API-MQTT Gateway
+### 👉 Node-Red
 ### 👉 postgREST (REST API for postgres database)
 ### 👉 NGINX-PHP (HTML and PHP Webserver) 
 
 ## *Databases*
-### 👉 MariaDB + adminer + phpmyadmin + maxscale
+### 👉 MariaDB + adminer + phpmyadmin + maxscale + (GraphQL)?
 ### 👉 postgres + adminer
 
 ## *Manage Docker*

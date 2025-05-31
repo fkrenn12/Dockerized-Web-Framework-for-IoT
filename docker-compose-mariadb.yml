@@ -1,4 +1,6 @@
-  services:
+# https://hub.docker.com/r/hasura/graphql-engine
+
+services:
     db:
       image: mariadb:latest
       container_name: mariadb
@@ -9,21 +11,22 @@
       volumes:
         - ./.mariadb/certs:/etc/mysql/certs
         - ./.mariadb/conf.d/secure.cnf:/etc/mysql/conf.d/secure.cnf
+        # uncomment if docker volume is necessary
         # - ${DB_VOLUME_NAME}:/var/lib/mysql
         - ./.mariadb/${DB_VOLUME_NAME}:/var/lib/mysql
         - /etc/localtime:/etc/localtime
       environment:
         MARIADB_ROOT_PASSWORD: example
-      # ports -> visible on the host to get ssh access
-      ports:
-        - "${PORT_DB}:3306"
+      # uncomment to make it visible on the host to get ssh access
+      # ports:
+      #  - "${PORT_DB}:3306"
       healthcheck:
         test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
         interval: 10s
         timeout: 5s
         retries: 3
 
-      # expose -> visible on the backnet but not on the host
+      # expose made it visible on the backnet but not on the host
       expose:
         - "${PORT_DB}"
       networks:
@@ -36,6 +39,7 @@
       # ports:
       #  - ${PORT_PHPMYADMIN}:80
       environment:
+        # uncomment if host should be selected on page
         # - PMA_ARBITRARY=1
         - PMA_HOST=db
         - PMA_ABSOLUTE_URI=https://${SUBDOMAIN_PHPMYADMIN}${DOMAIN}
@@ -47,7 +51,8 @@
         - "traefik.http.services.phpmyadmin.loadbalancer.server.port=80"
         - "traefik.http.routers.phpmyadmin.tls=true"
       depends_on:
-        - db
+        db:
+          condition: service_healthy
       networks:
         - backnet
 
@@ -63,10 +68,13 @@
         - "traefik.http.routers.adminer.tls.certresolver=letsencrypt"
         - "traefik.http.services.adminer.loadbalancer.server.port=${PORT_ADMINER}"
         - "traefik.http.routers.adminer.tls=true"
+      depends_on:
+        db:
+          condition: service_healthy
       networks:
         - backnet
 
-    #Max Scale - läuft aber geht noch nicht ganz
+    # Max Scale - läuft aber geht noch nicht ganz
     # username is admin and the password is mariadb
     maxscale:
       image: mariadb/maxscale:latest
@@ -80,6 +88,7 @@
         # to fix - here could be a potential bug
         - db:database
       depends_on:
-        - db
+        db:
+          condition: service_healthy
       networks:
         - backnet

@@ -17,27 +17,26 @@
          - "${PORT_MQTT_WS_SECURE}:8091"
          - "127.0.0.1:${PORT_MQTT_WS_UNSECURE}:8083"
 
-       # Should complete without needing to authenticate.
        healthcheck:
          test: ["CMD", "mosquitto_sub", "-t", "$$SYS/#", "-C", "1", "-i", "healthcheck", "-W", "3"]
          interval: 10s
          timeout: 10s
          retries: 6
          start_period: 20s
-
+       # apk add htop
+       # apk add mc
        command:
          - /bin/sh
          - -c
          - |
            apk update
-           apk add openssl
-           apk add htop
-           apk add mc
+           apk add openssl  
            /mosquitto/certs/./generate_certificates.sh       
            mosquitto -c /mosquitto/config/mosquitto.conf | pidof mosquitto > /mosquitto/config/pid
        expose:
          - ${PORT_MQTT_UNSECURE}
+         - ${PORT_MQTT_WS_UNSECURE}
        networks:
          - backnet
 
-    # /mosquitto/config/./set_permissions.sh
+    # /mosquitto/config/./set_permissions.sh  # ??
