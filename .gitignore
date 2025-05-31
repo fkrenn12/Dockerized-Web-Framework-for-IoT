@@ -1,5 +1,6 @@
 /backend/api/log/
 /backend/app/log/
+/backend/api-mqtt-gateway/log/
 /frontend/flet/log/
 /.idea/
 /.venv/

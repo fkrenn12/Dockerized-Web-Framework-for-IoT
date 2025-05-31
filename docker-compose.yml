@@ -2,13 +2,14 @@ include:
   # uncomment needed services
   # - docker-compose-influxdb-telegraf-grafana.yml # services influxdb, telegraf, grafana are declared
   - docker-compose-mariadb.yml  # services db, phpmyadmin, adminer, maxscale declared !! select only single database - both are not allowed
-  - docker-compose-node-red.yml
+  # - docker-compose-node-red.yml
   # - docker-compose-postgres.yml # service db declared !! select only single database - both are not allowed
   # - docker-compose-php-nginx.yml  # service php-nginx declared
   # - docker-compose-phpmyadmin.yml  # service phpmyadmin declared
   # - docker-compose-portainer.yml  # service portainer declared
   - docker-compose-traefik.yml  # service traefik declared
-  # - docker-compose-mosquitto.yml # service mosquitto declared
+  - docker-compose-mosquitto.yml # service mosquitto declared
+  - docker-compose-api-mqtt-gateway.yml # service api-mqtt-gateway declared
 
 # apt update
 # apt install unzip
@@ -26,7 +27,7 @@ services:
     container_name: app
     volumes:
       - ./backend/app/log:/usr/src/app/log
-      - ./backend/app/src:/usr/src/app/src:ro
+      - ./backend/app/src:/usr/src/app/src:volume-nocopy
     depends_on:
       db:
         condition: service_healthy
@@ -42,7 +43,7 @@ services:
     #  - "${PORT_API}:${PORT_API}"
     volumes:
       - ./backend/api/log:/usr/src/app/log
-      - ./backend/api/src:/usr/src/app/src:ro
+      - ./backend/api/src:/usr/src/app/src:volume-nocopy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api-secure.rule=Host(`${SUBDOMAIN_API}${DOMAIN}`)"
@@ -74,7 +75,7 @@ services:
     #  - "${PORT_FLET}:${PORT_FLET}"
     volumes:
       - ./frontend/flet/log:/usr/src/app/log
-      - ./frontend/flet/src:/usr/src/app/src:ro
+      - ./frontend/flet/src:/usr/src/app/src:volume-nocopy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.web-app.rule=Host(`${SUBDOMAIN_FLET}${DOMAIN}`)"
