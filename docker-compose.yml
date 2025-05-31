@@ -5,17 +5,11 @@ include:
   # - docker-compose-node-red.yml
   # - docker-compose-postgres.yml # service db declared !! select only single database - both are not allowed
   # - docker-compose-php-nginx.yml  # service php-nginx declared
-  # - docker-compose-phpmyadmin.yml  # service phpmyadmin declared
+  # - docker-compose-phpmyadmin.yml  # service phpmyadmin declared depends on: db
   # - docker-compose-portainer.yml  # service portainer declared
   - docker-compose-traefik.yml  # service traefik declared
   - docker-compose-mosquitto.yml # service mosquitto declared
-  - docker-compose-api-mqtt-gateway.yml # service api-mqtt-gateway declared
-
-# apt update
-# apt install unzip
-# apt install wget
-# wget https://github.com/fkrenn12/API-MQTT-Gateway/archive/master.zip
-# unzip filename.zip -d /path/to/directory
+  - docker-compose-api-mqtt-gateway.yml # service api-mqtt-gateway declared depends on: mosquitto
 
 services:
   app:
