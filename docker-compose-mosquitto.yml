@@ -39,4 +39,18 @@
        networks:
          - backnet
 
+    restarter:
+      image: docker:cli
+      volumes: [ "/var/run/docker.sock:/var/run/docker.sock" ]
+      command:
+          - |
+            while true; do
+              if [ "$$(date +'%H:%M')" = '01:00' ]; then
+                docker restart mosquitto
+              fi
+              sleep 60
+            done
+      # command: [ "/bin/sh", "-c", "while true; do sleep 86400; docker restart mosquitto; done" ]
+      restart: unless-stopped
+
     # /mosquitto/config/./set_permissions.sh  # ??
