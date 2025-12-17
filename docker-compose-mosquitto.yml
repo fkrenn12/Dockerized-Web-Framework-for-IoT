@@ -38,7 +38,9 @@
            mosquitto -c /mosquitto/config/mosquitto.conf | pidof mosquitto > /mosquitto/config/pid
        networks:
          - backnet
-
+         -
+    # docker restart mosquitto
+    # systemctl reload mosquitto
     restarter:
       image: docker:cli
       volumes: [ "/var/run/docker.sock:/var/run/docker.sock" ]
@@ -46,7 +48,7 @@
           - |
             while true; do
               if [ "$$(date +'%H:%M')" = '01:00' ]; then
-                docker restart mosquitto
+                killall -HUP mosquitto
               fi
               sleep 60
             done
