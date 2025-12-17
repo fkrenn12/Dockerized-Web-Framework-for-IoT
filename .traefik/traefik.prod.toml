@@ -1,6 +1,7 @@
 [entryPoints]
   [entryPoints.web]
     address = ":80"
+
   [entryPoints.web.http]
     [entryPoints.web.http.redirections]
       [entryPoints.web.http.redirections.entryPoint]
@@ -9,6 +10,12 @@
 
   [entryPoints.websecure]
     address = ":443"
+
+  [entryPoints.mqtt]
+    address = ":8883"
+
+  [entryPoints.websock]
+    address = ":8083"
 
 [accessLog]
 
@@ -19,6 +26,8 @@ insecure = false
 [providers]
   [providers.docker]
     exposedByDefault = false
+  [providers.file]
+    directory = "/configs/"
 
 
 [certificatesResolvers.letsencrypt.acme]

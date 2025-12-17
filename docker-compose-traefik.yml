@@ -20,9 +20,12 @@ services:
     ports:
       - 80:80
       - 443:443
+      - 8883:8883  # mosquitto secure mqtt
+      - 8083:8083  # mosquitto secure websocket
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./.traefik/public-certificates:/certificates"
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./.traefik/public-certificates:/certificates
+      - ./.traefik/configs:/configs
     command:
       - "--providers.docker=true"
       - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
