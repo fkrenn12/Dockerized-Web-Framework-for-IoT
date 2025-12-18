@@ -12,15 +12,15 @@
           - ./.mosquitto/certs/generate_self_signed_certificates.sh:/mosquitto/certs/generate_self_signed_certificates.sh
           # uncomment to hide in .mosquitto/certs for security purposes
           - ./.mosquitto/certs:/mosquitto/certs
-       ports:
+       # ports:
          # Attention: 1883 and 8083 are unsecure - use it carefully or bind it to localhost only !
-         - "127.0.0.1:${PORT_MQTT_UNSECURE}:1883"
-         - "${PORT_MQTT_SECURE}:8883"
-         - "${PORT_MQTT_WS_SECURE}:8091"
-         - "127.0.0.1:${PORT_MQTT_WS_UNSECURE}:8083"
+         # - "127.0.0.1:${PORT_MQTT_UNSECURE}:1883"
+         # - "${PORT_MQTT_SECURE}:8883"
+         # - "${PORT_MQTT_WS_SECURE}:8091"
+         # - "127.0.0.1:${PORT_MQTT_WS_UNSECURE}:8083"
        expose:
          - 1883
-         -
+
        labels:
          - "traefik.enable=true"
          - "traefik.tcp.routers.mqtt.rule=HostSNI(`${SUBDOMAIN_MQTT}${DOMAIN}`)"
