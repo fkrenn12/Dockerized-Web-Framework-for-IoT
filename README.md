@@ -145,5 +145,5 @@ Useful links:
 Requires Docker compose > 2.27 (check in terminal: docker compose version)
 
 ### /mariadb/certs/./generate_certificates.sh
-
+https://docs.linuxserver.io/images/docker-openssh-server/
 https://linuxize.com/post/how-to-setup-passwordless-ssh-login/
