@@ -5,7 +5,7 @@
        restart: always
        volumes:
           # :ro is not necessary
-          - ./.mosquitto/config:/mosquitto/config:ro
+          - ./.mosquitto/config:/mosquitto/config
           - ./.mosquitto/log:/mosquitto/log
           - ./.mosquitto/data:/mosquitto/data
           # self-signed certs are generated on every start of service - comment it, if providing other signed certs
@@ -36,13 +36,13 @@
          - "traefik.http.routers.websock.tls=true"
          - "traefik.http.routers.websock.tls.certresolver=letsencrypt"
          - "traefik.http.services.websockservice.loadbalancer.server.port=8083"
-       healthcheck:
-         test: ["CMD", "mosquitto_sub", "-t", "$$SYS/#", "-C", "1", "-i", "healthcheck", "-W", "3"]
-         interval: 10s
-         timeout: 10s
-         retries: 6
-         start_period: 60s
-         start_interval: 10s
+       #healthcheck:
+       #  test: ["CMD", "mosquitto_sub", "-t", "$$SYS/#", "-C", "1", "-i", "healthcheck", "-W", "3"]
+       #  interval: 10s
+       #  timeout: 10s
+       #  retries: 6
+       #  start_period: 60s
+       #  start_interval: 10s
        # apk add htop
        # apk add mc
        command:
@@ -53,14 +53,19 @@
          - -c
          - |
            apk add --no-cache openssl mc 
+           chmod 0600 /mosquitto/config/passwd
+           # chown root:root /mosquitto/config/passwd  # should run, but ssl do not work with it
+           chmod 0777 /mosquitto/config/*.sh
            mosquitto -c /mosquitto/config/mosquitto.conf | pidof mosquitto > /mosquitto/config/pid
        networks:
          - backnet
-
+    # chmod 0600 /mosquitto/config/passwd
+    # chown root:root /mosquitto/config/passwd
     # docker restart mosquitto
     # systemctl reload mosquitto
     restarter:
       image: docker:cli
+      container_name: mosquitto-restarter
       volumes: [ "/var/run/docker.sock:/var/run/docker.sock" ]
       command:
           - |
