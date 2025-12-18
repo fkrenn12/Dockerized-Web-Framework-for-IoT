@@ -9,10 +9,11 @@
           - ./.mosquitto/log:/mosquitto/log
           - ./.mosquitto/data:/mosquitto/data
           # self-signed certs are generated on every start of service - comment it, if providing other signed certs
-          - ./.mosquitto/certs/generate_self_signed_certificates.sh:/mosquitto/certs/generate_self_signed_certificates.sh
-          # uncomment to hide in .mosquitto/certs for security purposes
+          # or using traefik as reverse proxy
+          # - ./.mosquitto/certs/generate_self_signed_certificates.sh:/mosquitto/certs/generate_self_signed_certificates.sh
           - ./.mosquitto/certs:/mosquitto/certs
        # ports:
+         # ports are needed if traefik is not enabled as reverse proxy
          # Attention: 1883 and 8083 are unsecure - use it carefully or bind it to localhost only !
          # - "127.0.0.1:${PORT_MQTT_UNSECURE}:1883"
          # - "${PORT_MQTT_SECURE}:8883"
@@ -45,12 +46,13 @@
        # apk add htop
        # apk add mc
        command:
+         # insert following commands before mosquitto -c if using self signed certification process
+         # chmod +x /mosquitto/certs/generate_self_signed_certificates.sh /mosquitto/config/*.sh
+         # sh /mosquitto/certs/./generate_self_signed_certificates.sh
          - /bin/sh
          - -c
          - |
-           apk add --no-cache openssl mc
-           chmod +x /mosquitto/certs/generate_self_signed_certificates.sh /mosquitto/config/*.sh 
-           sh /mosquitto/certs/./generate_self_signed_certificates.sh  
+           apk add --no-cache openssl mc 
            mosquitto -c /mosquitto/config/mosquitto.conf | pidof mosquitto > /mosquitto/config/pid
        networks:
          - backnet
