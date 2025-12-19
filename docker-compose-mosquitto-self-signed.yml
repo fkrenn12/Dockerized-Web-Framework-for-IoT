@@ -49,13 +49,14 @@
       command:
           - |
             while true; do
-              if [ "$$(date +'%H:%M')" = '01:00' ]; then
-                killall -HUP mosquitto
+              if [ "$$(date +'%H:%M')" = '${MOSQUITTO_RESTART_HOUR}' ]; then
+                docker restart mosquitto
               fi
               sleep 60
             done
       # alternative possible command  - restart every 86400 seconds
       # command: [ "/bin/sh", "-c", "while true; do sleep 86400; docker restart mosquitto; done" ]
+      # killall -HUP mosquitto as command alternative
       restart: unless-stopped
 
     # /mosquitto/config/./set_permissions.sh  # ??
