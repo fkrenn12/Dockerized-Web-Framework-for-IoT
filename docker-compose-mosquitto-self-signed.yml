@@ -9,7 +9,7 @@
           - ./.mosquitto/data:/mosquitto/data
           - ./.mosquitto/certs/generate_self_signed_certificates.sh:/mosquitto/certs/generate_self_signed_certificates.sh
           - ./.mosquitto/certs:/mosquitto/certs
-          - ./.mosquitto/config/pid:/mosquitto/config/pid
+
        ports:
          # ports are needed if traefik is not enabled as reverse proxy
          # Attention: 1883 and 8083 are unsecure - use it carefully or bind it to localhost only !
