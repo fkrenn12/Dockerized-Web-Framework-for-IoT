@@ -1,8 +1,8 @@
 include:
   # basic services
-  - docker-compose-portainer.yml  # service portainer declared
-  - docker-compose-traefik.yml  # service traefik declared
-  - docker-compose-mariadb.yml  # services db, phpmyadmin, adminer, maxscale declared
+  #- docker-compose-portainer.yml  # service portainer declared
+  #- docker-compose-traefik.yml  # service traefik declared
+  #- docker-compose-mariadb.yml  # services db, phpmyadmin, adminer, maxscale declared
 
   # uncomment needed services
   #- docker-compose-wordpress.yml
@@ -10,12 +10,14 @@ include:
   #- docker-compose-python-app.yml  # service app declared | depends on: db
   #- docker-compose-flet-app.yml  # service flet declared | depends on: db
   #- docker-compose-fastapi-sqlmodel.yml  # service api-fastapi-sqlmodel declared | depends on: db
-  - docker-compose-nodered.yml  # service node-red
+  #- docker-compose-nodered.yml  # service node-red
   #- docker-compose-openssh-server.yml  # service openssh-server
-  #- docker-compose-openssh-client.yml  # service openssh-client
+  - docker-compose-openssh-client.yml  # service openssh-client
   - docker-compose-php-nginx.yml  # service php-nginx declared
-  #- docker-compose-api-mqtt-gateway.yml # service api-mqtt-gateway declared | depends on: mosquitto
-  #- docker-compose-mosquitto.yml # service mosquitto declared
+  - docker-compose-api-mqtt-gateway.yml # service api-mqtt-gateway declared | depends on: mosquitto
+  - docker-compose-mosquitto-reverse-proxy.yml # service mosquitto with reverse proxy declared
+  #- docker-compose-mosquitto-self-signed.yml # service mosquitto with self signed certificates declared
+  #- docker-compose-home-assistant.yml
 
 networks:
   backnet:

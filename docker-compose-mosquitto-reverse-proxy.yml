@@ -5,6 +5,7 @@
        restart: always
        volumes:
           - ./.mosquitto/config:/mosquitto/config  # :ro is not necessary
+          - ./.mosquitto/config/mosquitto/mosquitto-reverse-proxy.conf:/mosquitto/config/mosquitto.conf
           - ./.mosquitto/log:/mosquitto/log
           - ./.mosquitto/data:/mosquitto/data
           # self-signed certs are generated on every start of service - comment it, if providing other signed certs
@@ -57,7 +58,7 @@
            - /bin/sh
            - -c
            - |
-             apk add --no-cache openssl mc curl
+             apk add --no-cache openssl mc
              # chmod 0600 /mosquitto/config/passwd
              # chown root:root /mosquitto/config/passwd
              chmod 0777 /mosquitto/config/*.sh
