@@ -21,8 +21,8 @@ services:
     ports:
       - 80:80
       - 443:443
-      - 8883:8883  # mosquitto secure mqtt - uncomment if self-signed certificates version of mosquitto is used
-      - 8083:8083  # mosquitto secure websocket - uncomment if self-signed certificates version of mosquitto is used
+      - ${PORT_MQTT_SECURE}:8883  # mosquitto secure mqtt - uncomment if self-signed certificates version of mosquitto is used
+      - ${PORT_MQTT_WS_SECURE}:8083  # mosquitto secure websocket - uncomment if self-signed certificates version of mosquitto is used
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./.traefik/public-certificates:/certificates
