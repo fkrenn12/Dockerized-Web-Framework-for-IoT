@@ -65,6 +65,8 @@
       container_name: mosquitto-restarter
       volumes: [ "/var/run/docker.sock:/var/run/docker.sock" ]
       command:
+          - /bin/sh
+          - -c
           - |
             while true; do
               if [ "$$(date +'%H:%M')" = '${MOSQUITTO_RESTART_HOUR}' ]; then
