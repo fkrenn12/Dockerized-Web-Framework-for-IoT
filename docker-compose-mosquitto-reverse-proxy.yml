@@ -5,22 +5,16 @@
        restart: always
        volumes:
           - ./.mosquitto/config:/mosquitto/config  # :ro is not necessary
-          # - ./.mosquitto/config/mosquitto-reverse-proxy.conf:/mosquitto/config/mosquitto.conf
           - ./.mosquitto/log:/mosquitto/log
           - ./.mosquitto/data:/mosquitto/data
-          # self-signed certs are generated on every start of service - comment it, if providing other signed certs
-          # or using traefik as reverse proxy
-          # - ./.mosquitto/certs/generate_self_signed_certificates.sh:/mosquitto/certs/generate_self_signed_certificates.sh
-          # - ./.mosquitto/certs:/mosquitto/certs
+          - ./.mosquitto/certs/generate_self_signed_certificates.sh:/mosquitto/certs/generate_self_signed_certificates.sh
+          - ./.mosquitto/certs:/mosquitto/certs
 
-       # with traefik as reverse proxy you do not need ports explicit
+       # ports are not needed for secure connections if traefik is working as reverse proxy
+       # if unsecure connections are necessary then uncomment
        # ports:
-         # ports are needed if traefik is not enabled as reverse proxy
          # Attention: 1883 and 8083 are unsecure - use it carefully or bind it to localhost only !
          # - "127.0.0.1:${PORT_MQTT_UNSECURE}:1883"
-         # - 1883:1883
-         # - "${PORT_MQTT_SECURE}:8883"
-         # - "${PORT_MQTT_WS_SECURE}:8091"
          # - "127.0.0.1:${PORT_MQTT_WS_UNSECURE}:8083"
        expose:
          - 1883
@@ -52,9 +46,6 @@
        #   start_period: 60s
        #   start_interval: 10s
        command:
-           # insert following commands before mosquitto -c if using self signed certification process
-           # chmod +x /mosquitto/certs/generate_self_signed_certificates.sh /mosquitto/config/*.sh
-           # sh /mosquitto/certs/./generate_self_signed_certificates.sh
            - /bin/sh
            - -c
            - |
@@ -62,6 +53,8 @@
              # chmod 0600 /mosquitto/config/passwd
              # chown root:root /mosquitto/config/passwd
              chmod 0777 /mosquitto/config/*.sh
+             chmod +x /mosquitto/certs/generate_self_signed_certificates.sh /mosquitto/config/*.sh
+             sh /mosquitto/certs/./generate_self_signed_certificates.sh
              mosquitto -c /mosquitto/config/mosquitto.conf | pidof mosquitto > /mosquitto/config/pid
        networks:
            - backnet

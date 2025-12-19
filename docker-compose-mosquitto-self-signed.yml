@@ -5,7 +5,6 @@
        restart: always
        volumes:
           - ./.mosquitto/config:/mosquitto/config  # :ro is not necessary
-          # - ./.mosquitto/config/mosquitto-self-signed.conf:/mosquitto/config/mosquitto.conf
           - ./.mosquitto/log:/mosquitto/log
           - ./.mosquitto/data:/mosquitto/data
           - ./.mosquitto/certs/generate_self_signed_certificates.sh:/mosquitto/certs/generate_self_signed_certificates.sh
