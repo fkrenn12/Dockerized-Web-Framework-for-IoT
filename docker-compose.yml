@@ -1,7 +1,7 @@
 include:
   # basic services
   #- docker-compose-portainer.yml  # service portainer declared
-  #- docker-compose-traefik.yml  # service traefik declared
+  - docker-compose-traefik.yml  # service traefik declared
   #- docker-compose-mariadb.yml  # services db, phpmyadmin, adminer, maxscale declared
 
   # uncomment needed services
@@ -12,9 +12,9 @@ include:
   #- docker-compose-fastapi-sqlmodel.yml  # service api-fastapi-sqlmodel declared | depends on: db
   #- docker-compose-nodered.yml  # service node-red
   #- docker-compose-openssh-server.yml  # service openssh-server
-  - docker-compose-openssh-client.yml  # service openssh-client
-  - docker-compose-php-nginx.yml  # service php-nginx declared
-  - docker-compose-api-mqtt-gateway.yml # service api-mqtt-gateway declared | depends on: mosquitto
+  #- docker-compose-openssh-client.yml  # service openssh-client
+  #- docker-compose-php-nginx.yml  # service php-nginx declared
+  #- docker-compose-api-mqtt-gateway.yml # service api-mqtt-gateway declared | depends on: mosquitto
   - docker-compose-mosquitto-reverse-proxy.yml # service mosquitto with reverse proxy declared
   #- docker-compose-mosquitto-self-signed.yml # service mosquitto with self signed certificates declared
   #- docker-compose-home-assistant.yml

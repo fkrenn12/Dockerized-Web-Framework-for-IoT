@@ -5,7 +5,7 @@
        restart: always
        volumes:
           - ./.mosquitto/config:/mosquitto/config  # :ro is not necessary
-          - ./.mosquitto/config/mosquitto/mosquitto-reverse-proxy.conf:/mosquitto/config/mosquitto.conf
+          - ./.mosquitto/config/mosquitto-reverse-proxy.conf:/mosquitto/config/mosquitto.conf
           - ./.mosquitto/log:/mosquitto/log
           - ./.mosquitto/data:/mosquitto/data
           # self-signed certs are generated on every start of service - comment it, if providing other signed certs
