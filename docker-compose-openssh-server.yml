@@ -35,6 +35,6 @@ services:
       - "traefik.http.routers.ssh_tunnel2.rule=Host(`${SUBDOMAIN_2_TUNNEL}${DOMAIN}`)"
       - "traefik.http.routers.ssh_tunnel2.tls.certresolver=letsencrypt"
       - "traefik.http.routers.ssh_tunnel2.service=ssh2"
-      - "traefik.http.services.ssh2.loadbalancer.server.port=${PORT_2_TUNNEL"
+      - "traefik.http.services.ssh2.loadbalancer.server.port=${PORT_2_TUNNEL}"
     networks:
       - backnet
