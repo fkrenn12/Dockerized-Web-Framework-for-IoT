@@ -35,6 +35,7 @@
              apk add --no-cache openssl mc sed
              # chmod 0600 /mosquitto/config/passwd
              # chown root:root /mosquitto/config/passwd
+             touch /mosquitto/config/pid
              chmod 0777 /mosquitto/config/*.sh
              chmod +x /mosquitto/certs/generate_self_signed_certificates.sh /mosquitto/config/*.sh
              sh /mosquitto/certs/./generate_self_signed_certificates.sh
