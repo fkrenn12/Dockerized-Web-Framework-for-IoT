@@ -14,6 +14,8 @@ Running on remote Linux Host run script: x-delete_single_user.sh
 ⭐On localhost run script: x-generate_passwd.ps1  
 ⭐On remote Linux Host run script: x-generate_passwd.sh   
 
+# Change password for user
+Actually, the easiest way is to delete the user with x-delete_single_user.sh and then add the user again with x-add_single_user.sh using the new password.    
 Mosquitto configuration manual: https://mosquitto.org/man/mosquitto-conf-5.html
 
 ## ✔️ Example for executing a command in the container terminal ✔️
