@@ -11,8 +11,23 @@ It is designed to support a wide range of use cases, from basic service setups t
 🚀 **Simplicity, Scalability & Modularity:**  
 The project emphasizes simplicity, scalability, and modularity, making it ideal for quickly deploying and testing multiple services while maintaining clean and organized configurations.
 ## Prerequisites
-- Required software, e.g., Docker, Docker Compose, etc.
-- Minimum system requirements.
+### 🔧 Required Software
+- **Docker** (version 20.10 or higher)
+```shell
+docker version
+```
+
+  Install Docker from the [official website](https://www.docker.com/) or via your package manager.
+- **Docker Compose** (version 2.5.0 or higher)
+```shell
+docker compose version
+```
+
+  Docker Compose is essential for orchestrating multi-service environments. It is included in recent Docker Desktop installations.
+- **Git** (optional, for cloning this repository)
+```shell
+git -v
+```
 
 ## Features
 - Highlights of the project setup.

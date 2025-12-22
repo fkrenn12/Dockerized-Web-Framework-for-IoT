@@ -1,5 +1,9 @@
 # 🐳 Dockerized Web-Framework for IoT 🐳
-Requires Docker compose **> 2.27**   
+Requires Docker compose **> 2.27**
+You can check with this command:
+```shell
+docker version
+```
 Select preconfigured services in docker-compose.yml by comment or uncomment includes.
 
 ##  🐧🐧🚀 Installing - Linux ( production environment )🚀️🐧🐧
