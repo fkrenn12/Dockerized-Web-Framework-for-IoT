@@ -11,17 +11,25 @@ include:
   #- docker-compose-flet-app.yml  # service flet declared | depends on: db
   #- docker-compose-fastapi-sqlmodel.yml  # service api-fastapi-sqlmodel declared | depends on: db
   #- docker-compose-nodered.yml  # service node-red
-  #- docker-compose-openssh-server.yml  # service openssh-server
+  #- docker-compose-openssh-server.yml  # service https://docs.linuxserver.io/images/docker-openssh-server/
   #- docker-compose-openssh-client.yml  # service openssh-client
   #- docker-compose-php-nginx.yml  # service php-nginx declared
   #- docker-compose-api-mqtt-gateway.yml # service api-mqtt-gateway declared | depends on: mosquitto
   - docker-compose-mosquitto-reverse-proxy.yml # service mosquitto with reverse proxy declared
   #- docker-compose-mosquitto-self-signed.yml # service mosquitto with self signed certificates declared
   #- docker-compose-home-assistant.yml
+  #- docker-compose-samba-server.yml
 
 networks:
   backnet:
     name: back-network
+    driver: bridge
+    ipam:
+      config:
+          - subnet: 172.21.0.0/16
+            gateway: 172.21.0.1
+
+
 
 
 

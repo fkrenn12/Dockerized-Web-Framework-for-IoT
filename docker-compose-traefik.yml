@@ -1,16 +1,14 @@
 services:
   traefik-certs-dumper:
-    image: ldez/traefik-certs-dumper:v2.9.3
+    image: ghcr.io/kereis/traefik-certs-dumper:latest
     container_name: traefik-certs-dumper
-    entrypoint: sh -c '
-      while ! [ -e /data/acme.json ]
-      || ! [ `jq ".[] | .Certificates | length" /data/acme.json | jq -s "add" ` != 0 ]; do
-      sleep 1
-      ; done
-      && traefik-certs-dumper file --version v2 --watch
-      --source /data/acme.json --dest /data/certs'
+    restart: unless-stopped
+    depends_on:
+      - traefik
     volumes:
-      - ./.traefik/public-certificates:/data
+      - /etc/localtime:/etc/localtime:ro
+      - ./.traefik/public-certificates:/traefik:ro  # reading acme from challenge already done by traefik
+      - ./.certs:/output  # certs output
 
   traefik:
     build:
@@ -47,4 +45,5 @@ services:
       # Default password: admin
       - "traefik.http.middlewares.basic-auth-global.basicauth.users=${TRAEFIK_USER}:${TRAEFIK_PASSWORD_HASH}"
     networks:
-      - backnet
+      backnet:
+        ipv4_address: 172.21.0.200
