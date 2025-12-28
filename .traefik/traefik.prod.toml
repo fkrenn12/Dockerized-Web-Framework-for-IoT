@@ -17,6 +17,24 @@
   [entryPoints.websock]
     address = ":8083"
 
+  [entryPoints.smtp]
+    address = ":25"
+
+    [entryPoints.smtp.proxyProtocol]
+    trustedIPs = ["172.21.0.200", "172.21.0.201"]
+
+  [entryPoints.smtps]
+    address = ":465"
+
+    [entryPoints.smtps.proxyProtocol]
+    trustedIPs = ["172.21.0.200", "172.21.0.201"]
+
+  [entryPoints.imaps]
+    address = ":993"
+
+    [entryPoints.imaps.proxyProtocol]
+    trustedIPs = ["172.21.0.200", "172.21.0.201"]
+
 [accessLog]
 
 [api]
