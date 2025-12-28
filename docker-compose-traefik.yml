@@ -46,4 +46,4 @@ services:
       - "traefik.http.middlewares.basic-auth-global.basicauth.users=${TRAEFIK_USER}:${TRAEFIK_PASSWORD_HASH}"
     networks:
       backnet:
-        ipv4_address: 172.21.0.200
+        ipv4_address: ${TRAEFIK_STATIC_IP}
