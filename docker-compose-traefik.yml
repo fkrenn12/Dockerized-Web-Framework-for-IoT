@@ -16,6 +16,9 @@ services:
       dockerfile: Dockerfile
     container_name: traefik
     restart: always
+    # in case of log error tcp connecting to 1883
+    # depends_on:
+    #  - mosquitto
     ports:
       - 80:80
       - 443:443
