@@ -17,8 +17,8 @@
   [entryPoints.redis]
     address = ":6379"
 
-  # [entryPoints.postgres]
-  #  address = ":5432"
+  [entryPoints.postgres]
+    address = ":5432"
 
   [entryPoints.websock]
     address = ":8083"
