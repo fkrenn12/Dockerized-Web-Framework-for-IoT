@@ -20,8 +20,10 @@ services:
     # depends_on:
     #  - mosquitto
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
+      - "6379:6379" # Redis port
+      # - "5432:5432" # PostgreSQL port
       - ${PORT_MQTT_SECURE}:8883  # mosquitto secure mqtt - uncomment if self-signed certificates version of mosquitto is used
       - ${PORT_MQTT_WS_SECURE}:8083  # mosquitto secure websocket - uncomment if self-signed certificates version of mosquitto is used
     volumes:
