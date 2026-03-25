@@ -1,0 +1,31 @@
+# https://kanzitelli.medium.com/deploying-postgresql-and-redis-behind-traefik-in-the-cloud-c8eade9b5874
+
+services:
+  redis:
+    image: redis:latest
+    restart: always
+    user: '0'
+    container_name: redis
+    expose:
+      - 6379
+    ports:
+      - ${PORT_REDIS_UNSECURE}:6379
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      # - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    volumes:
+      - ./.redis/data:/data
+    command: redis-server --save 20 1 --loglevel warning --requirepass myPass
+    #labels:
+      #- "traefik.enable=true"
+      # routers
+      #- "traefik.tcp.routers.redis.rule=HostSNI(`*`)"
+      #- "traefik.tcp.routers.redis.entryPoints=redis"
+      #- "traefik.tcp.routers.redis.service=redisservice"
+      #- "traefik.tcp.routers.redis.tls.certresolver=letsencrypt"
+      #- "traefik.tcp.routers.redis.tls=true"
+       # services (needed for TCP)
+      #- "traefik.tcp.services.redisservice.loadbalancer.server.port=6379"
+    networks:
+       - backnet
