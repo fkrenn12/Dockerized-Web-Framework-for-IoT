@@ -19,6 +19,8 @@ services:
       - ./.redis/data:/data
       - ./.redis/redis.conf:/etc/redis.conf
     command: redis-server /etc/redis.conf --loglevel warning
+    # documentation site which might be help to solve tls issue
+    # https://doc.traefik.io/traefik/reference/install-configuration/providers/kv/redis/#opt-providers-redis-tls
     #labels:
       #- "traefik.enable=true"
       # routers
