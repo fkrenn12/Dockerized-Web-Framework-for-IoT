@@ -1,11 +1,12 @@
-FROM python:3.13-slim
+FROM python:3.13-trixie
 
 WORKDIR /usr/src/app
 
 # set environment variables - has advantages for python in docker cointainer
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-
+RUN apt-get update
+RUN apt-get install -y git
 # install python dependencies
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
