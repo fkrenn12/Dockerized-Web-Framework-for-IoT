@@ -1,0 +1,19 @@
+services:
+  zigbee2mqtt:
+      image: koenkk/zigbee2mqtt:latest
+      container_name: zigbee2mqtt
+      restart: always
+      volumes:
+        - ./.zigbee2mqtt-data:/app/data
+        - /run/udev:/run/udev:ro
+      ports:
+        # Frontend port
+        - ${PORT_ZIGBEE2MQTT}:8080
+      devices:
+        # determine the usb serial port adapter name with: ls /dev/serial/by-id/
+        # e.g. result: "usb-dresden_elektronik_ConBee_III_DE06923599-if00-port0" and replace it here
+        - /dev/serial/by-id/usb-dresden_elektronik_ConBee_III_DE06923599-if00-port0:/dev/ttyUSB0
+      environment:
+        - TZ=${TZ}
+      networks:
+        - backnet
