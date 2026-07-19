@@ -1,0 +1,31 @@
+services:
+  loxone-mqtt-bridge:
+    build:
+      context: ./backend/loxone-mqtt-bridge
+      no_cache: true
+
+    container_name: loxone-mqtt-bridge
+    restart: always
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    environment:
+      - API_PORT=${PORT_API_LOXONE_MQTT_BRIDGE}
+      - UDP_PORT=${PORT_UDP_LOXONE_MQTT_BRIDGE}
+    ports:
+      - "${PORT_UDP_LOXONE_MQTT_BRIDGE}:${PORT_UDP_LOXONE_MQTT_BRIDGE}"
+      - "${PORT_API_LOXONE_MQTT_BRIDGE}:${PORT_API_LOXONE_MQTT_BRIDGE}"
+    expose:
+      - "${PORT_UDP_LOXONE_MQTT_BRIDGE}"
+    volumes:
+      - ./.loxone-mqtt-bridge/config:/usr/src/config
+      - /etc/localtime:/etc/localtime
+    networks:
+      - backnet
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cd /usr/src/app
+        uvicorn main:app ${RELOAD} --workers 1 --host "0.0.0.0" --port ${PORT_API_LOXONE_MQTT_BRIDGE} --proxy-headers
+    depends_on:
+      - mosquitto
