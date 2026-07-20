@@ -59,8 +59,8 @@ async def lifespan(api: FastAPI):
 api = FastAPI(lifespan=lifespan,
               title="RESTful API",
               version="1.0.0",
-              contact={"name": "Franz Krenn",
-                       "email": "office@fkrenn.at"},
+              contact={"name": "Your name",
+                       "email": "office@email.com"},
               summary="Simplify database access",
               description=description)
 
