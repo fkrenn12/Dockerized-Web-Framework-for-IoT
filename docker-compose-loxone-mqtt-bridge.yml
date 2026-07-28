@@ -1,9 +1,6 @@
 services:
   loxone-mqtt-bridge:
-    build:
-      context: ./backend/loxone-mqtt-bridge
-      no_cache: true
-
+    image: fkrenn12/loxone-mqtt-bridge
     container_name: loxone-mqtt-bridge
     restart: always
     stdin_open: true # docker run -i
