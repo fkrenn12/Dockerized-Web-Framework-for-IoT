@@ -9,16 +9,18 @@ services:
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     environment:
-      - API_PORT=${PORT_API_LOXONE_MQTT_BRIDGE}
-      - UDP_PORT=${PORT_UDP_LOXONE_MQTT_BRIDGE}
+      - API_PORT=${PORT_API_LOXONE_MQTT_BRIDGE:-5602}
+      - UDP_PORT=${PORT_UDP_LOXONE_MQTT_BRIDGE:-4444}
+      - LOXONE_IP=${LOXONE_IP:-}
+      - TZ=${TZ:-UTC}
     ports:
-      - "${PORT_UDP_LOXONE_MQTT_BRIDGE}:${PORT_UDP_LOXONE_MQTT_BRIDGE}/udp"
-      - "${PORT_API_LOXONE_MQTT_BRIDGE}:${PORT_API_LOXONE_MQTT_BRIDGE}"
+      - "${PORT_UDP_LOXONE_MQTT_BRIDGE:-5602}:${PORT_UDP_LOXONE_MQTT_BRIDGE:-5602}/udp"
+      - "${PORT_API_LOXONE_MQTT_BRIDGE:-4444}:${PORT_API_LOXONE_MQTT_BRIDGE:-4444}"
     expose:
       - "${PORT_UDP_LOXONE_MQTT_BRIDGE}"
     volumes:
-      - ./.loxone-mqtt-bridge/config:/usr/src/config
-      - /etc/localtime:/etc/localtime
+      - ${SRC_MOUNT:-loxone_config:/usr/src/config} # mounting twice is ok
+      - loxone_config:/usr/src/config
     networks:
       - backnet
     command:
@@ -29,3 +31,6 @@ services:
         uvicorn main:app ${RELOAD} --workers 1 --host "0.0.0.0" --port ${PORT_API_LOXONE_MQTT_BRIDGE} --proxy-headers
     depends_on:
       - mosquitto
+
+volumes:
+  loxone_config:
