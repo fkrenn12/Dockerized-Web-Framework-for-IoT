@@ -16,7 +16,6 @@ services:
     expose:
       - "${PORT_UDP_LOXONE_MQTT_BRIDGE}"
     volumes:
-      - ${SRC_MOUNT:-loxone_config:/usr/src/config} # mounting twice is ok
       - loxone_config:/usr/src/config
     networks:
       - backnet
