@@ -9,6 +9,12 @@ services:
       - API_PORT=${PORT_API_LOXONE_MQTT_BRIDGE:-5602}
       - UDP_PORT=${PORT_UDP_LOXONE_MQTT_BRIDGE:-4444}
       - LOXONE_IP=${LOXONE_IP:-}
+      - HOST_IP=192.168.0.100  # needed to serve static web correctly
+      - MQTT_HOST=mosquitto
+      - MQTT_PORT=1883
+      - MQTT_USER=
+      - MQTT_PASS=
+      - MQTT_SSL=False
       - TZ=${TZ:-UTC}
     ports:
       - "${PORT_UDP_LOXONE_MQTT_BRIDGE:-5602}:${PORT_UDP_LOXONE_MQTT_BRIDGE:-5602}/udp"
